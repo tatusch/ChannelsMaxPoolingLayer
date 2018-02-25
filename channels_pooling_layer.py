@@ -3,7 +3,7 @@ from keras.models import Sequential
 from keras.engine.topology import Layer
 import numpy as np
 
-class ChannelMaxPooling(Layer):
+class ChannelsMaxPooling(Layer):
     '''Channels MaxPooling Layer for 2D Inputs.
 
         # Arguments
@@ -48,20 +48,3 @@ class ChannelMaxPooling(Layer):
             output_shape = (input_shape[0], ((input_shape[1] - self.pool_size) / self.stride) + 1, input_shape[2], input_shape[3])
         return output_shape
 
-
-# Testing if Layer works properly
-def main():
-    input_ar = np.array([[[1,1,1], [2,2,2], [4,5,6]],
-                         [[2,2,2], [3,3,5], [4,4,4]],
-                         [[3,3,3], [2,2,2], [2,2,2]]
-                         ])
-    model = Sequential()
-    model.add(ChannelMaxPooling(pool_size=3, input_shape=(None,None,3)))
-    model.summary()
-    model.compile(loss='categorical_crossentropy', optimizer='sgd')
-
-    output_ar = model.predict(np.array([input_ar]))
-    print(output_ar)
-
-if __name__ == "__main__":
-    main()
